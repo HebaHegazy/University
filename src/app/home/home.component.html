@@ -1,0 +1,118 @@
+<header>
+    <!-- <nav class="navbar navbar-default navbar-fixed-top navi">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
+            </div>
+            <div class="  navibar" id="myNavbar"> 
+                <ul class="nav navbar-nav mynavi">
+                    <li class="active"><a routerLink="../home">Home</a></li>
+                    <li><a routerLink="../addStudent">Add Student</a></li>  
+                </ul>
+            </div>
+        </div>
+    </nav> -->
+<nav role="navigation">
+  <div id="menuToggle">
+
+    <input type="checkbox" />
+    <span></span>
+    <span></span>
+    <span></span>
+    
+    <ul id="menu">
+      <a routerLink="../home"><li class="active">Home</li></a>
+      <a routerLink="../addStudent"><li>Add Student</li></a>
+    </ul>
+  </div>
+</nav>
+</header>
+<br><br>
+<main>
+	<div style="text-align:center">
+		<h1 class="uni">
+	    	Welcome to {{ title }}!
+	    </h1>
+	</div>
+	
+	<div style="position: relative;" *ngIf="students != []">
+	    <div id="myCarousel" class="carousel slide" data-interval="false">
+	        <!-- Indicators -->
+	        <ol class="carousel-indicators">
+	            <li data-target="#myCarousel" *ngFor="let x of students;let i = index" [attr.data-slide-to]="i" ngClass="i == 0 ? 'active' : ''"></li>
+	        </ol>
+	        <!-- Wrapper for slides -->
+	        <div class="carousel-inner" role="listbox" style="background-color: aliceblue">
+	            <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-9 col-xs-offset-1" *ngFor="let j of students; let k = index" [ngClass]="k == 0 ? 'item active' : 'item'">
+	                <img src={{students[k].image}} (click)="showStudentDetails(j)" class="img-thumbnail" alt="Student Image" style="width: 600px;height: 250px">
+	                <div class="container">
+	           			<div class="carousel-caption" >
+	              			<p> Name: {{j.name}} </p> 
+	              			<p> Age: {{j.Age}} years old </p> 
+	              			<p> Faculty: {{j.facultyName}} </p>
+	            		</div>
+	          		</div>
+	            </div>
+	        </div>
+
+	        <!-- Left and right controls -->
+	        <a class="left carousel-control" href="#myCarousel" (click)="close()" role="button" data-slide="prev">
+	            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	            <span class="sr-only">Previous</span>
+	        </a>
+	        <a class="right carousel-control" href="#myCarousel" (click)="close()" role="button" data-slide="next">
+	            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+	            <span class="sr-only">Next</span>
+	        </a>
+	    </div>
+	</div>
+    <br>
+    <div *ngIf="showDetails"  style="background-color: #d8ddec;border-radius: 12px" class="col-md-8 col-md-offset-2">
+    	<!-- <div > -->
+    	<h1 class="text-center" style="color:#8394b7">Student Details <button style="font-size: 28px;color:#8394b7;" class="btn pull-right" (click)="close()">x</button></h1>
+
+    	<br>
+    	<div class="row">
+    		<div class="col-md-3 col-sm-3 col-sm-offset-1 col-md-offset-1">
+    			<img src="{{studentImage}}" width="200" height="200">
+    			<br><br>
+    			<p><label>Name:</label> {{studentName}} </p>
+    		</div>
+    		<br><br>
+    		<div class="col-md-4 col-sm-4" >
+    			<p><label>Faculty name:</label> {{facultyName}}</p>
+    			<p><label>Phone:</label> {{phone}}</p>
+    			<p><label>Date of birth:</label> {{dateOfBirth}}</p>
+    			<p><label>Address:</label> {{address}}</p>
+    		</div>
+    		<div class="col-md-3 col-sm-3 col-sm-offset-1 col-md-offset-1" style="border-left: 1px solid gray;height:130px">
+    			<p><button class="btn btn-default"(click)= "edit()">Edit</button></p>
+    			<p><button class="btn btn-default" href="#myModal" data-toggle="modal">Delete</button></p>
+    			<!-- Modal HTML -->
+				<div id="myModal" class="modal fade">
+					<div class="modal-dialog modal-confirm">
+						<div class="modal-content">
+							<div class="modal-header">			
+								<h4 class="modal-title">Confirmation</h4>	
+				                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							</div>
+							<div class="modal-body">
+								<p>Are you sure you want to delete this student? This action cannot be undone and you will be unable to recover any data.</p>
+							</div>
+							<div class="modal-footer">
+				                <a href="#" class="btn btn-info" data-dismiss="modal">Cancel</a>
+								<a (click)="removeStudent()" class="btn btn-danger">Yes, delete it!</a>
+							</div>
+						</div>
+					</div>
+				</div> 
+    		</div>
+    	</div>
+    	<!-- </div> -->
+    </div>
+    <ngx-toasta [position]="'top-right'"></ngx-toasta>  
+</main>
